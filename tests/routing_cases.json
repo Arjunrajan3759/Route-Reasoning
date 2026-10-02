@@ -1,0 +1,51 @@
+[
+  {
+    "id": "ambiguous-requirement",
+    "prompt": "Build me a fast dashboard, but I have not defined fast, the data source, or the users.",
+    "primary": "Socrates",
+    "reviewer": null
+  },
+  {
+    "id": "root-cause-system",
+    "prompt": "Explain why samples disappear between acquisition, queueing, serialization, and disk write.",
+    "primary": "Aristotle",
+    "reviewer": "Hume"
+  },
+  {
+    "id": "reusable-frame-model",
+    "prompt": "Design one extensible frame abstraction for several current and unknown future sensors.",
+    "primary": "Plato",
+    "reviewer": "Aristotle"
+  },
+  {
+    "id": "debug-parser",
+    "prompt": "Debug an intermittent packet parser failure and find the smallest safe fix.",
+    "primary": "Descartes",
+    "reviewer": "Socrates"
+  },
+  {
+    "id": "benchmark-adoption",
+    "prompt": "A prompt reports a 12-point benchmark gain on 80 questions. Should we adopt it?",
+    "primary": "Hume",
+    "reviewer": "Socrates"
+  },
+  {
+    "id": "spec-review",
+    "prompt": "Check this implementation against protocol invariants and acceptance criteria.",
+    "primary": "Kant",
+    "reviewer": "Socrates"
+  },
+  {
+    "id": "architecture-tension",
+    "prompt": "Resolve the trade-off between compressing on an MCU and preserving deterministic acquisition.",
+    "primary": "Hegel",
+    "reviewer": "Aristotle"
+  },
+  {
+    "id": "manual-override",
+    "prompt": "Use Hume first and Kant as reviewer to assess this test report.",
+    "primary": "Hume",
+    "reviewer": "Kant",
+    "explicit_override": true
+  }
+]
