@@ -1,11 +1,30 @@
 ---
 name: route-reasoning
-description: Selects and applies a fitting structured reasoning lens to complex tasks, with optional user override and a compact verification pass. Use for ambiguous or multi-step questions, calculations, debugging, architecture and design trade-offs, research or evidence synthesis, root-cause analysis, specification and constraint checking, conceptual modeling, or explicit requests to reason using Socratic, Aristotelian, Platonic, Cartesian, Humean, Kantian, or Hegelian methods. Do not trigger for trivial lookups, simple transformations, or purely stylistic writing unless explicitly requested.
+description: Routes complex tasks through a fitting structured-reasoning lens, with optional overrides and verification. Use for analysis, debugging, research, trade-offs, or prompts beginning /route-reasoning.
 ---
 
 # Route Reasoning
 
 Route a task to one primary reasoning lens and, only when useful, one reviewer lens. Treat the lenses as operational scaffolds rather than historical impersonations.
+
+## Explicit activation
+
+Accept these portable command forms when they begin a request:
+
+```text
+/route-reasoning <request>
+/route-reasoning --lens <lens> <request>
+/route-reasoning --reviewer <lens> <request>
+/route-reasoning --lens <lens> --reviewer <lens> <request>
+/route-reasoning --auto <request>
+/route-reasoning --hide-lenses <request>
+```
+
+- Remove `/route-reasoning` and every recognized flag with its value before analyzing the remaining request. Lens names are case-insensitive.
+- `--lens` selects the primary lens and overrides automatic routing, even when it is a poor fit; briefly note its likely blind spot. `--auto` requests automatic routing. If both are present, follow the explicit `--lens`.
+- `--reviewer` selects a reviewer without replacing the primary lens. `--hide-lenses` suppresses lens labels in the answer, not the reasoning procedure.
+- For an unknown flag, return a short correction that names the supported flags instead of guessing or silently changing behavior.
+- Slash activation is optional: continue to route automatically when the skill is selected implicitly, and continue to honor native platform invocation such as `$route-reasoning` and natural-language overrides. Do not expose private chain-of-thought.
 
 ## Workflow
 

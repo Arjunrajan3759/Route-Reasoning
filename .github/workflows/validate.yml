@@ -1,4 +1,4 @@
-name: Validate Agent Skill
+name: Validate and Release Agent Skill
 
 on:
   push:
@@ -17,5 +17,43 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate package
+      - name: Validate skill
         run: python3 scripts/validate.py
+      - name: Run compatibility and regression tests
+        run: python3 -m unittest discover -s tests -p "test_*.py"
+      - name: Build and inspect distribution
+        run: python3 scripts/build_dist.py
+
+  release:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate skill
+        run: python3 scripts/validate.py
+      - name: Run compatibility and regression tests
+        run: python3 -m unittest discover -s tests -p "test_*.py"
+      - name: Build and inspect distribution
+        run: python3 scripts/build_dist.py
+      - name: Generate checksum
+        run: sha256sum dist/route-reasoning-skill.zip > dist/route-reasoning-skill.zip.sha256
+      - name: Create or update release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          assets=(dist/route-reasoning-skill.zip dist/route-reasoning-skill.zip.sha256)
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "${assets[@]}" --clobber
+          else
+            gh release create "$tag" "${assets[@]}" --title "$tag" --generate-notes
+          fi

@@ -41,6 +41,8 @@ def validate_manifest() -> None:
     description = re.search(r"^description:\s*(.+)$", yaml, re.MULTILINE)
     if not description or len(description.group(1).strip()) < 80:
         fail("frontmatter description is missing or too vague")
+    if len(description.group(1).strip()) > 200:
+        fail("frontmatter description must be 200 characters or fewer")
 
     for relative in re.findall(r"`(references/[^`]+\.md)`", text):
         if not (SKILL / relative).is_file():
@@ -75,6 +77,18 @@ def validate_cases() -> None:
 
         primary = case.get("primary")
         reviewer = case.get("reviewer")
+        should_route = case.get("should_route", True)
+        if not isinstance(should_route, bool):
+            fail(f"{case_id}: should_route must be a boolean")
+        for field in ("explicit_override", "explicit_reviewer", "hide_lenses"):
+            if field in case and not isinstance(case[field], bool):
+                fail(f"{case_id}: {field} must be a boolean")
+        if not should_route:
+            if primary is not None or reviewer is not None:
+                fail(f"{case_id}: non-routing cases must not select lenses")
+            if not case.get("prompt", "").strip():
+                fail(f"{case_id}: prompt is empty")
+            continue
         if primary not in LENSES:
             fail(f"{case_id}: unknown primary lens {primary!r}")
         if reviewer is not None and reviewer not in LENSES:

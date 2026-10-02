@@ -47,5 +47,26 @@
     "primary": "Hume",
     "reviewer": "Kant",
     "explicit_override": true
+  },
+  {
+    "id": "explicit-reviewer",
+    "prompt": "/route-reasoning --reviewer Kant Evaluate the evidence in this test report.",
+    "primary": "Hume",
+    "reviewer": "Kant",
+    "explicit_reviewer": true
+  },
+  {
+    "id": "hide-lens-labels",
+    "prompt": "/route-reasoning --hide-lenses Resolve the trade-off between reliability and latency.",
+    "primary": "Hegel",
+    "reviewer": "Aristotle",
+    "hide_lenses": true
+  },
+  {
+    "id": "simple-question-no-routing",
+    "prompt": "What is 2 + 2?",
+    "primary": null,
+    "reviewer": null,
+    "should_route": false
   }
 ]

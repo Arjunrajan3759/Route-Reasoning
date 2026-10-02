@@ -1,7 +1,7 @@
 interface:
   display_name: "Reasoning Router"
   short_description: "Select and apply the right reasoning lens"
-  default_prompt: "Use $route-reasoning to choose an effective reasoning lens and solve this problem."
+  default_prompt: "Use $route-reasoning to choose a reasoning lens, solve this problem, and verify the result."
   icon_small: "assets/icon.svg"
   icon_large: "assets/icon.svg"
 policy:
